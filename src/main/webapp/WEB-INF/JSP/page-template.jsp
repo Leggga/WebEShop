@@ -1,12 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
-
-</body>
+	<head>
+		<meta charset="ISO-8859-1">
+		<title>Web e-Shop</title>
+	    <link href="static/css/bootstrap.css" rel="stylesheet">
+	    <link href="static/css/bootstrap-theme.css" rel="stylesheet">
+	    <link href="static/css/font-awesome.css" rel="stylesheet">
+	    <link href="static/css/app.css" rel="stylesheet">
+	    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
+	</head>
+	<body>
+		<header>
+			<jsp:include page="fragment/header.jsp"></jsp:include>
+		</header>
+		<div class="container-fluid">
+			<div class="row">
+				<aside class="col-xs-12 col-sm-4 col-md-3 col-lg-2">
+					<jsp:include page="fragment/aside.jsp"></jsp:include>
+				</aside>
+				<main class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
+					<jsp:include page="${currentPage}"></jsp:include>
+				</main>
+			</div>
+		</div>
+		<footer class="footer">
+			<jsp:include page="fragment/footer.jsp"></jsp:include>
+		</footer>
+		<script src="static/js/jquery.js"></script>
+		<script src="static/js/app.js"></script>
+		<script src="static/js/bootstrap.js"></script>
+	</body>
 </html>
