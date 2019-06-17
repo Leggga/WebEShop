@@ -11,14 +11,15 @@ public class FillDataBaseJdbc {
 		String[] brands = { "Huawei", "Lenovo", "Meizu", "Xiaomi", "Sharp", "Canon", "Samsung", "Asus", "Acer",
 				"Dell" };
 		String[] categories = { "E-book", "Mp3-player", "Notebook", "Phone", "Smartphone", "Smartwatch", "Tablet" };
-		String[] images = {"736d61727470686f6e65.jpg","652d626f6f6b.jpg", "6d70332d706c61796572.jpg", "6e6f7465626f6f6b.jpg",
-							"70686f6e65.jpg", "736d6172747761746368.jpg", "7461626c6574.jpg"};
-		
-		try (Connection conn = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/n92vl1LaLo", "n92vl1LaLo",
-				"P8IjujPLOY")) {
-//			fillBrands(conn, brands);
-//			fillCategories(conn, categories);
-//			fillProducts(conn, brands, categories, images);
+		String[] images = { "652d626f6f6b.jpg", "6d70332d706c61796572.jpg", "6e6f7465626f6f6b.jpg", "70686f6e65.jpg",
+				"736d61727470686f6e65.jpg", "736d6172747761746368.jpg", "7461626c6574.jpg" };
+
+		try (Connection conn = DriverManager.getConnection("jdbc:mysql://remotemysql.com:3306/n92vl1LaLo", "",
+				"")) {
+			fillBrands(conn, brands);
+			fillCategories(conn, categories);
+			fillProducts(conn, brands, categories, images);
+			fixImaginesAndCategory(conn, images, categories);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -47,18 +48,20 @@ public class FillDataBaseJdbc {
 		}
 	}
 
-	public static void fillProducts(Connection conn, String[] brands, String[] categories, String[] images ) throws SQLException {
+	public static void fillProducts(Connection conn, String[] brands, String[] categories, String[] images)
+			throws SQLException {
 		PreparedStatement stat = conn.prepareStatement("INSERT INTO product VALUES (?, ?, ?, ?, ?, ?, ?);");
 		int idPos = 1;
 		Random rnd = new Random();
-		
+
 		for (int i = 0; i < brands.length; i++) {
 			for (int j = 0; j < 3; j++) {
 				stat.setInt(1, idPos++);
-				stat.setString(2, brands[i] + " " + (char) (rnd.nextInt(26) + 'A') + (char) (rnd.nextInt(26) + 'A') + rnd.nextInt(2555555));
-				stat.setString(3, "Monitor diagonal 4.4 / " + 
-						"Camera: 3.2Mp / RAM: 1 Gb / Black / 1700 mA/h / Weight 800 g / " + 
-						"Bluetooth / 3G / FM receiver");
+				stat.setString(2, brands[i] + " " + (char) (rnd.nextInt(26) + 'A') + (char) (rnd.nextInt(26) + 'A')
+						+ rnd.nextInt(2555555));
+				stat.setString(3,
+						"Monitor diagonal 4.4 / " + "Camera: 3.2Mp / RAM: 1 Gb / Black / 1700 mA/h / Weight 800 g / "
+								+ "Bluetooth / 3G / FM receiver");
 				stat.setString(4, "media/" + images[rnd.nextInt(images.length)]);
 				stat.setFloat(5, rnd.nextInt(3800));
 				stat.setInt(6, rnd.nextInt(categories.length) + 1);
@@ -66,6 +69,16 @@ public class FillDataBaseJdbc {
 				stat.execute();
 			}
 		}
+
 	}
 
+	public static void fixImaginesAndCategory(Connection conn, String[] images, String[] category) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("Update product Set image_link = ? Where id_category = ?");
+
+		for(int i = 0; i < category.length; i++) {
+			ps.setString(1, images[i]);
+			ps.setInt(2, i + 1);
+			ps.execute();
+		}
+	}
 }

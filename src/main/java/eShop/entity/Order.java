@@ -5,7 +5,8 @@ import java.sql.Timestamp;
 import java.util.List;
 
 public class Order extends AbstractEntity<Long> {
-
+	private static final long serialVersionUID = 1536448334575182091L;
+	
 	private int idAccount;
 	private List<OrderItem> items;
 	private Timestamp created;

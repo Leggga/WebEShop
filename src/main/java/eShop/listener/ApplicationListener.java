@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebListener;
 
 import org.apache.log4j.Logger;
 
+import eShop.Constants;
 import eShop.service.impl.ServiceManager;
 
 @WebListener
@@ -18,6 +19,8 @@ public class ApplicationListener implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		try {
 			serviceManager = ServiceManager.getInstance(sce.getServletContext());
+			sce.getServletContext().setAttribute(Constants.CATEGORY_LIST, serviceManager.getProductService().allCategoriesList());
+			sce.getServletContext().setAttribute(Constants.PRODUCER_LIST, serviceManager.getProductService().allProducersList());
 		} catch (RuntimeException e) {
 			LOGGER.error("Servlet context init failed!", e);
 			throw e;

@@ -1,16 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+		<meta charset="utf-8">
 		<title>Web e-Shop</title>
-	    <link href="static/css/bootstrap.css" rel="stylesheet">
-	    <link href="static/css/bootstrap-theme.css" rel="stylesheet">
-	    <link href="static/css/font-awesome.css" rel="stylesheet">
-	    <link href="static/css/app.css" rel="stylesheet">
-	    <link rel="shortcut icon" href="static/img/favicon.ico" type="image/x-icon">
-		<link rel="icon" href="static/img/favicon.ico" type="image/x-icon">
+	    <link href="/WebShop/static/css/bootstrap.css" rel="stylesheet">
+	    <link href="/WebShop/static/css/bootstrap-theme.css" rel="stylesheet">
+	    <link href="/WebShop/static/css/font-awesome.css" rel="stylesheet">
+	    <link href="/WebShop/static/css/app.css" rel="stylesheet">
+	    <link rel="shortcut icon" href="/WebShop/static/img/favicon.ico" type="image/x-icon">
+		<link rel="icon" href="/WebShop/static/img/favicon.ico" type="image/x-icon">
 	</head>
 	<body>
 		<header>
@@ -29,8 +28,8 @@
 		<footer class="footer">
 			<jsp:include page="fragment/footer.jsp"></jsp:include>
 		</footer>
-		<script src="static/js/jquery.js"></script>
-		<script src="static/js/app.js"></script>
-		<script src="static/js/bootstrap.js"></script>
+		<script src="/WebShop/static/js/jquery.js"></script>
+		<script src="/WebShop/static/js/app.js"></script>
+		<script src="/WebShop/static/js/bootstrap.js"></script>
 	</body>
 </html>

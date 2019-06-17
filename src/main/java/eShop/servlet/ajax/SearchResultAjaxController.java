@@ -14,16 +14,15 @@ import eShop.form.SearchForm;
 import eShop.servlet.AbstractController;
 import eShop.utils.RoutingUtils;
 
-@WebServlet("/ajax/html/more/products")
-public class ProductsAjaxController extends AbstractController {
-
-	private static final long serialVersionUID = 4339551731615038616L;
+@WebServlet("/ajax/html/more/search")
+public class SearchResultAjaxController extends AbstractController {
+	
+	private static final long serialVersionUID = 1242221517790524153L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		SearchForm searchForm = createSearchForm(req);
 		List<Product> products = getProductService().productsBySearch(searchForm, getPage(req), Constants.MAX_PRODUCTS_PER_PAGE);
-		
 		req.setAttribute("products", products);
 		RoutingUtils.forwardToFragment("product-list.jsp", req, resp);
 	}

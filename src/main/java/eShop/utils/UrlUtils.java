@@ -6,22 +6,22 @@ public class UrlUtils {
 	}
 	
 	public static boolean isAjaxUrl(String url) {
-		return url.startsWith("/ajax/");
+		return url.startsWith("/WebShop/ajax/");
 	}
 	
 	public static boolean isAjaxJsonUrl(String url) {
-		return url.startsWith("/ajax/json/");
+		return url.startsWith("/WebShop/ajax/json/");
 	}
 	
 	public static boolean isAjaxHtmlUrl(String url) {
-		return url.startsWith("/ajax/html/");
+		return url.startsWith("/WebShop/ajax/html/");
 	}
 	
 	public static boolean isStaticUrl(String url) {
-		return url.startsWith("/static/");
+		return url.startsWith("/WebShop/static/");
 	}
 	
 	public static boolean isMediaUrl(String url) {
-		return url.startsWith("/media/");
+		return url.startsWith("/WebShop/media/");
 	}
 }

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import eShop.utils.RoutingUtils;
 
-@WebFilter("/*")
+@WebFilter(filterName = "ErrorHandler")
 public class ErrorHandlerFilter extends AbstractFilter {
 
 	@Override
@@ -21,7 +21,8 @@ public class ErrorHandlerFilter extends AbstractFilter {
 			chain.doFilter(req, resp);
 		} catch (Throwable t) {
 			String requestURI = req.getRequestURI();
-			LOGGER.error("Requested URI: " + requestURI + " Not Found!!!");
+			LOGGER.error("Requested URI: " + requestURI + " Threw an error!!! " , t);
+			resp.setStatus(resp.SC_INTERNAL_SERVER_ERROR);
 			RoutingUtils.forwardToPage("error.jsp", req, resp);
 		}
 	}

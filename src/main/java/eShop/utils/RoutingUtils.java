@@ -6,6 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.JSONObject;
+
 public final class RoutingUtils {
 	
 	public static void forwardToFragment(String fragment, HttpServletRequest req, HttpServletResponse resp)
@@ -26,6 +28,12 @@ public final class RoutingUtils {
 		resp.getWriter().close();
 	}
 
+	public static void sendJsonObject(JSONObject json, HttpServletRequest req, HttpServletResponse resp) throws IOException{
+		resp.setContentType("application/json");
+		resp.getWriter().print(json.toString());
+		resp.getWriter().close();
+	}
+	
 	public static void redirect(String url, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 		resp.sendRedirect(url);
 	}

@@ -1,12 +1,18 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
-</head>
-<body>
+<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true"%>
 
-</body>
-</html>
+<%@ taglib prefix="tags" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<div id="productList" data-page-count="${pages}" data-page-num="1">
+	<div class="alert alert-info" role="alert">
+  		Found ${countProductFound} products by your query!
+	</div>
+	<div class="row">
+		<jsp:include page="../fragment/product-list.jsp"></jsp:include>
+	</div>
+	<c:if test="${pages > 1}">
+		<div class="text-center hidden-print">
+			<a id="loadMore" class="btn btn-success">Load more</a>
+		</div>
+	</c:if>
+</div>

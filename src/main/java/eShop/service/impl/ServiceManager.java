@@ -2,18 +2,33 @@ package eShop.service.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.servlet.ServletContext;
+
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.apache.log4j.Logger;
 
 import eShop.service.OrderService;
 import eShop.service.ProductService;
 
 public class ServiceManager {
 
+	private final Logger LOGGER = Logger.getLogger(getClass());
+
 	private final ProductService productService;
 	private final OrderService orderService;
 	private final Properties property;
+	private final BasicDataSource dataSource;
+
+	private ServiceManager(ServletContext context) {
+		this.property = new Properties();
+		loadProperty();
+		this.dataSource = initDataSource();
+		this.orderService = new OrderServiceImpl(dataSource);
+		this.productService = new ProductServiceImpl(dataSource);
+	}
 
 	public static ServiceManager getInstance(ServletContext context) {
 		ServiceManager instance = (ServiceManager) context.getAttribute("SERVICE_MANAGER");
@@ -25,7 +40,11 @@ public class ServiceManager {
 	}
 
 	public void close() {
-		// close resources
+		try {
+			dataSource.close();
+		} catch (SQLException e) {
+			LOGGER.error("Can't close dataSource!", e);
+		}
 	}
 
 	public OrderService getOrderService() {
@@ -48,11 +67,18 @@ public class ServiceManager {
 		}
 	}
 
-	private ServiceManager(ServletContext context) {
-		this.orderService = new OrderServiceImpl();
-		this.productService = new ProductServiceImpl();
-		this.property = new Properties();
-		loadProperty();
+	private BasicDataSource initDataSource() {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDefaultAutoCommit(false);
+		dataSource.setRollbackOnReturn(true);
+		dataSource.setDriverClassName(getAppProperty("db.driver"));
+		dataSource.setUrl(getAppProperty("db.url"));
+		dataSource.setUsername(getAppProperty("db.username"));
+		dataSource.setPassword(getAppProperty("db.password"));
+		dataSource.setInitialSize(Integer.parseInt(getAppProperty("db.pool.initSize")));
+		dataSource.setMaxTotal(Integer.parseInt(getAppProperty("db.pool.maxSize")));
+
+		return dataSource;
 	}
 
 }
