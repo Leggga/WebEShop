@@ -4,23 +4,30 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.log4j.Logger;
+
 import eShop.form.ProductForm;
 import eShop.form.SearchForm;
 import eShop.service.OrderService;
 import eShop.service.ProductService;
+import eShop.service.SocialService;
 import eShop.service.impl.ServiceManager;
 
 public abstract class AbstractController extends HttpServlet {
 
 	private static final long serialVersionUID = -1633085722032900758L;
+	
+	protected final Logger LOGGER = Logger.getLogger(getClass());
 
 	private ProductService productService;
 	private OrderService orderService;
+	private SocialService socialService;
 
 	@Override
 	public final void init() throws ServletException {
 		productService = ServiceManager.getInstance(getServletContext()).getProductService();
 		orderService = ServiceManager.getInstance(getServletContext()).getOrderService();
+		socialService = ServiceManager.getInstance(getServletContext()).getSocialService();
 	}
 
 	public final OrderService getOrderService() {
@@ -29,6 +36,10 @@ public abstract class AbstractController extends HttpServlet {
 
 	public final ProductService getProductService() {
 		return productService;
+	}
+	
+	public final SocialService getSocialService() {
+		return socialService;
 	}
 	
 	public final int getPageCount(int total, int itemsPerPage) {

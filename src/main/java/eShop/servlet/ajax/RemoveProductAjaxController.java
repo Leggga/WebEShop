@@ -24,9 +24,15 @@ public class RemoveProductAjaxController extends AbstractController {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		ProductForm productForm = createProductForm(req);
 		ShoppingCart cart = SessionUtils.getCurrentShoppingCart(req);
-		
+
 		getOrderService().removeProductFromCart(productForm, cart);
-		
+
+		if (cart.getItems().isEmpty()) {
+			SessionUtils.clearCurrentShoppingCart(req, resp);
+		} else {
+			SessionUtils.updateCurrentShoppingCart(getOrderService().shoppingCartToString(cart), resp);
+		}
+
 		JSONObject json = new JSONObject();
 		json.put("totalCount", cart.getTotalCount());
 		json.put("totalCost", cart.getTotalCost());

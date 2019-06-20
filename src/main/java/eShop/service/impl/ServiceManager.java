@@ -12,15 +12,17 @@ import org.apache.log4j.Logger;
 
 import eShop.service.OrderService;
 import eShop.service.ProductService;
+import eShop.service.SocialService;
 
 public class ServiceManager {
 
 	private final Logger LOGGER = Logger.getLogger(getClass());
 
 	private final ProductService productService;
+	private final SocialService socialService;
+	private final BasicDataSource dataSource;
 	private final OrderService orderService;
 	private final Properties property;
-	private final BasicDataSource dataSource;
 
 	private ServiceManager(ServletContext context) {
 		this.property = new Properties();
@@ -28,6 +30,7 @@ public class ServiceManager {
 		this.dataSource = initDataSource();
 		this.orderService = new OrderServiceImpl(dataSource);
 		this.productService = new ProductServiceImpl(dataSource);
+		this.socialService = new FacebookSocialServiceImpl(this);
 	}
 
 	public static ServiceManager getInstance(ServletContext context) {
@@ -53,6 +56,10 @@ public class ServiceManager {
 
 	public ProductService getProductService() {
 		return productService;
+	}
+	
+	public SocialService getSocialService() {
+		return socialService;
 	}
 
 	public String getAppProperty(String key) {

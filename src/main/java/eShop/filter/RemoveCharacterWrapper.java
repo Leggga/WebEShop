@@ -1,18 +1,18 @@
 package eShop.filter;
 
-import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.StringWriter;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 public class RemoveCharacterWrapper extends HttpServletResponseWrapper{
-	private final CharArrayWriter out;
+	private final StringWriter out;
 	
 	public RemoveCharacterWrapper(HttpServletResponse resp) {
 		super(resp);
-		out = new CharArrayWriter();
+		out = new StringWriter();
 	}
 
 	@Override

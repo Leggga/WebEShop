@@ -5,6 +5,7 @@ $(function() {
 		$('#addToCart').click(addProductToCart);
 		$('#addProductPopup .count').change(calculateCost);
 		$('#loadMore').click(loadMoreProducts);
+		$('#loadMoreOrders').click(loadMoreOrders);
 		initSearchForm();
 		$('#goSearch').click(goSearch);
 		$('.remove-product').click(removeProductFromCart);
@@ -52,9 +53,13 @@ $(function() {
 				$('#currentShoppingCart').removeClass('hidden');
 				$('#addProductPopup').modal('hide');
 			},
-			error : function(data) {
+			error : function(xhr) {
 				convertLoaderToBtn(btn, 'btn-primary', addProductToCart);
-				alert('Error');
+				if (xhr.status == 400) {
+					alert(xhr.responseJSON.message);
+				} else {
+					alert('Error');
+				}
 			}
 
 		});
@@ -117,11 +122,50 @@ $(function() {
 				} else {
 					btn.remove();
 				}
-				init();
+				initBuyBtn();
 			},
-			error : function(data) {
+			error : function(xhr) {
 				convertLoaderToBtn(btn, 'btn-success', loadMoreProducts);
-				alert('Error');
+				if (xhr.status == 401) {
+					window.location.href = "/WebShop/sign-in";
+				} else {
+					alert('Error');
+				}
+			}
+
+		});
+	};
+	var loadMoreOrders = function() {
+		var btn = $('#loadMoreOrders');
+		convertBtnToLoader(btn, 'btn-success');
+
+		var pageNumber = parseInt($('#table-orders').attr('data-page-num'));
+		var url = '/WebShop/ajax/html/more/' + location.pathname.substring(9)
+				+ '?page=' + (pageNumber + 1) + '&'
+				+ location.search.substring(1);
+
+		$.ajax({
+			url : url,
+			success : function(html) {
+				$('#table-orders').append(html);
+				pageNumber++;
+				var pageCount = parseInt($('#table-orders').attr(
+						'data-page-count'));
+
+				if (pageNumber < pageCount) {
+					$('#table-orders').attr('data-page-num', pageNumber);
+					convertLoaderToBtn(btn, 'btn-success', loadMoreOrders);
+				} else {
+					btn.remove();
+				}
+			},
+			error : function(xhr) {
+				convertLoaderToBtn(btn, 'btn-success', loadMoreOrders);
+				if (xhr.status == 401) {
+					window.location.href = "/WebShop/sign-in";
+				} else {
+					alert('Error');
+				}
 			}
 
 		});

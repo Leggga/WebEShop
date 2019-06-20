@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import eShop.Constants;
+
 public final class RoutingUtils {
 	
 	public static void forwardToFragment(String fragment, HttpServletRequest req, HttpServletResponse resp)
@@ -34,7 +36,12 @@ public final class RoutingUtils {
 		resp.getWriter().close();
 	}
 	
-	public static void redirect(String url, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	public static void redirect(String url, HttpServletResponse resp) throws IOException {
+		resp.sendRedirect(url);
+	}
+	
+	public static void redirectToRefererPage(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+		String url = req.getSession().getAttribute(Constants.REFERER_PAGE) == null ? "/WebShop/products" : (String)req.getSession().getAttribute(Constants.REFERER_PAGE);
 		resp.sendRedirect(url);
 	}
 }
