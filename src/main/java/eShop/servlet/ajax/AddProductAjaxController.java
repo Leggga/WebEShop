@@ -26,6 +26,9 @@ public class AddProductAjaxController extends AbstractController {
 		ShoppingCart cart = SessionUtils.getCurrentShoppingCart(req);
 
 		getOrderService().addProductToCart(productForm, cart);
+		
+		//put cart in a cookie
+		SessionUtils.updateCurrentShoppingCart(getOrderService().shoppingCartToString(cart), resp);
 
 		JSONObject json = new JSONObject();
 		json.put("totalCount", cart.getTotalCount());

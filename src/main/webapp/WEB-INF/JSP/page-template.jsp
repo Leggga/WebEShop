@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
 		<title>Web e-Shop</title>
 	    <link href="/WebShop/static/css/bootstrap.css" rel="stylesheet">
 	    <link href="/WebShop/static/css/bootstrap-theme.css" rel="stylesheet">

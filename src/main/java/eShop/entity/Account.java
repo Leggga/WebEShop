@@ -1,11 +1,31 @@
 package eShop.entity;
 
-public class Account extends AbstractEntity<Integer> {
+import eShop.model.CurrentAccount;
+
+public class Account extends AbstractEntity<Integer> implements CurrentAccount {
 
 	private static final long serialVersionUID = 5227982377116367762L;
 
 	private String name;
 	private String email;
+
+	public Account(Integer id, String name, String email) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.email = email;
+	}
+
+	public Account(String name, String email) {
+		super();
+		this.name = name;
+		this.email = email;
+	}
+
+	@Override
+	public String getDescription() {
+		return name + "(" + email + ")";
+	}
 
 	public String getName() {
 		return name;

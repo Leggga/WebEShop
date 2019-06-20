@@ -22,6 +22,8 @@ public class RemoveCharactersFromHtmlFilter extends AbstractFilter {
 		chain.doFilter(request, responseWrapper);
 
 		out.write(responseWrapper.toString());
+		out.flush();
+		out.close();
 	}
 
 }

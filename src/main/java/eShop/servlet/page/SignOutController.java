@@ -10,18 +10,20 @@ import javax.servlet.http.HttpServletResponse;
 import eShop.servlet.AbstractController;
 import eShop.utils.RoutingUtils;
 import eShop.utils.SessionUtils;
-@WebServlet("/shopping-cart")
-public class ShowShoppingCartController extends AbstractController{
 
-	private static final long serialVersionUID = 2395910652232194050L;
+@WebServlet("/sign-out")
+public class SignOutController extends AbstractController {
+
+	private static final long serialVersionUID = -975953455203080295L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (SessionUtils.isCurrentShoppingCart(req)) {
-			RoutingUtils.forwardToPage("shopping-cart.jsp", req, resp);			
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if (SessionUtils.isCurrentAccount(req)) {
+			req.getSession().invalidate();
+			RoutingUtils.redirect("/WebShop/products", resp);
 		} else {
+			// TODO exception or modal window
 			RoutingUtils.redirect("/WebShop/products", resp);
 		}
 	}
-	
 }

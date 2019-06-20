@@ -14,7 +14,6 @@ import eShop.exception.ValidationException;
 import eShop.model.ShoppingCart;
 import eShop.service.OrderService;
 import eShop.service.impl.ServiceManager;
-import eShop.utils.SerializerShoppingCart;
 import eShop.utils.SessionUtils;
 
 @WebFilter(filterName = "SyncCart")
@@ -39,7 +38,7 @@ public class SyncShoppingCartFilter extends AbstractFilter {
 					ShoppingCart cart = null;
 
 					try {
-						cart = SerializerShoppingCart.shoppingCartFromString(strCart, orderService);
+						cart = orderService.shoppingCartFromString(strCart);
 					} catch (ValidationException e) {
 						LOGGER.error("Validation exception, new shopping cart will return!", e);
 						cart = new ShoppingCart();

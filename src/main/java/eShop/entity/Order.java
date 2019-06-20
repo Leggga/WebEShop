@@ -10,6 +10,14 @@ public class Order extends AbstractEntity<Long> {
 	private int idAccount;
 	private List<OrderItem> items;
 	private Timestamp created;
+	
+	
+
+	public Order(Long id, int idAccount, Timestamp created) {
+		this.id = id;
+		this.idAccount = idAccount;
+		this.created = created;
+	}
 
 	public int getIdAccount() {
 		return idAccount;
@@ -39,12 +47,13 @@ public class Order extends AbstractEntity<Long> {
 		BigDecimal cost = BigDecimal.ZERO;
 		if (items != null) {
 			for (OrderItem item : items) {
-				cost = cost.add(item.getProduct().getPrice()).multiply(BigDecimal.valueOf(item.getCountProduct()));
+				cost = cost.add(item.getProduct().getPrice().multiply(BigDecimal.valueOf(item.getCountProduct())));
 			}
 		}
 		return cost;
 	}
-
+	
+	
 	@Override
 	public String toString() {
 		return String.format("Order [idAccount=%s, items=%s, created=%s]", idAccount, items, created);

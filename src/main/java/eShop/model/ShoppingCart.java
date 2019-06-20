@@ -2,7 +2,7 @@ package eShop.model;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import eShop.Constants;
@@ -11,7 +11,7 @@ import eShop.exception.ValidationException;
 
 public class ShoppingCart {
 
-	private Map<Integer, ShoppingCartItem> cart = new HashMap<Integer, ShoppingCartItem>(
+	private Map<Integer, ShoppingCartItem> cart = new LinkedHashMap<>(
 			Constants.MAX_SHOPPING_CART_ITEMS);
 
 	private BigDecimal totalCost = BigDecimal.ZERO;

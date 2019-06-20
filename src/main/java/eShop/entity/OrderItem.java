@@ -7,7 +7,7 @@ public class OrderItem extends AbstractEntity<Long> {
 	private long idOrder;
 	private Product product;
 	private int countProduct;
-
+	
 	public long getIdOrder() {
 		return idOrder;
 	}

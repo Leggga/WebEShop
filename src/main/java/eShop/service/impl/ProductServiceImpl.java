@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import eShop.entity.Category;
 import eShop.entity.Producer;
 import eShop.entity.Product;
-import eShop.exception.ServerSqlException;
+import eShop.exception.InternalServerException;
 import eShop.form.SearchForm;
 import eShop.jdbc.JdbcUtils;
 import eShop.jdbc.ResultSetHandler;
@@ -49,7 +49,7 @@ class ProductServiceImpl implements ProductService {
 
 			return JdbcUtils.selectQuery(conn, sqlSelect, productResultSetHandler, limit, offset);
 		} catch (SQLException e) {
-			throw new ServerSqlException("Can't execute sql query!", e);
+			throw new InternalServerException("Can't execute sql query!", e);
 		}
 	}
 
@@ -70,7 +70,7 @@ class ProductServiceImpl implements ProductService {
 					"LIMIT ? OFFSET ?";
 			return JdbcUtils.selectQuery(conn, sqlSelect, productResultSetHandler, categoryUrl, limit, offset);
 		}catch(SQLException e) {
-			throw new ServerSqlException("Can't execute sql query!", e);
+			throw new InternalServerException("Can't execute sql query!", e);
 		}
 	}
 
@@ -85,7 +85,7 @@ class ProductServiceImpl implements ProductService {
 					"ORDER BY category";
 			return JdbcUtils.selectQuery(conn, sqlSelect, categoryResultSetHandler);
 		}catch(SQLException e) {
-			throw new ServerSqlException("Can't execute sql query!", e);
+			throw new InternalServerException("Can't execute sql query!", e);
 		}
 	}
 
@@ -99,7 +99,7 @@ class ProductServiceImpl implements ProductService {
 					"ORDER BY producer";
 			return JdbcUtils.selectQuery(conn, sqlSelect, producerResultSetHandler);
 		}catch(SQLException e) {
-			throw new ServerSqlException("Can't execute sql query!", e);
+			throw new InternalServerException("Can't execute sql query!", e);
 		}
 	}
 	
@@ -110,7 +110,7 @@ class ProductServiceImpl implements ProductService {
 					"FROM product";
 			return JdbcUtils.selectQuery(conn, sqlSelect, countItemsResultSetHandler);
 		}catch(SQLException e) {
-			throw new ServerSqlException("Can't execute sql query!", e);
+			throw new InternalServerException("Can't execute sql query!", e);
 		}
 	}
 
@@ -122,7 +122,7 @@ class ProductServiceImpl implements ProductService {
 					"WHERE url = ?";
 			return JdbcUtils.selectQuery(conn, sqlSelect, countItemsResultSetHandler, category);
 		}catch(SQLException e) {
-			throw new ServerSqlException("Can't execute sql query!", e);
+			throw new InternalServerException("Can't execute sql query!", e);
 		}
 	}
 
@@ -146,7 +146,7 @@ class ProductServiceImpl implements ProductService {
 			return JdbcUtils.selectQuery(conn, sqlSelect, productResultSetHandler, "%" + searchForm.getQuery() + "%", 
 					"%" + searchForm.getQuery() + "%", limit, offset);
 		} catch (SQLException e) {
-			throw new ServerSqlException("Can't execute sql query!", e);
+			throw new InternalServerException("Can't execute sql query!", e);
 		}
 	}
 
@@ -166,7 +166,7 @@ class ProductServiceImpl implements ProductService {
 			return JdbcUtils.selectQuery(conn, sqlSelect, countItemsResultSetHandler, "%" + searchForm.getQuery() + "%",
 					"%" + searchForm.getQuery() + "%");
 		}catch(SQLException e) {
-			throw new ServerSqlException("Can't execute sql query!", e);
+			throw new InternalServerException("Can't execute sql query!", e);
 		}
 	}
 	
